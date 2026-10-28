@@ -17,7 +17,17 @@ const corsOrigin = !rawOrigins || rawOrigins === '*'
         .filter(Boolean);
 app.use((0, cors_1.default)({ origin: corsOrigin }));
 app.use(express_1.default.json({ limit: '100kb' }));
-app.get('/api/health', (_req, res) => {
+app.get('/', (_req, res) => {
+    res.json({
+        name: 'API de tareas',
+        status: 'ok',
+        endpoints: {
+            health: '/api/health',
+            todos: '/api/todos',
+        },
+    });
+});
+app.get(['/health', '/api/health'], (_req, res) => {
     res.json({ status: 'ok', uptime: process.uptime() });
 });
 app.use('/api/todos', todos_1.default);

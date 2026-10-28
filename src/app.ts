@@ -17,7 +17,18 @@ const corsOrigin =
 app.use(cors({ origin: corsOrigin }));
 app.use(express.json({ limit: '100kb' }));
 
-app.get('/api/health', (_req, res) => {
+app.get('/', (_req, res) => {
+  res.json({
+    name: 'API de tareas',
+    status: 'ok',
+    endpoints: {
+      health: '/api/health',
+      todos: '/api/todos',
+    },
+  });
+});
+
+app.get(['/health', '/api/health'], (_req, res) => {
   res.json({ status: 'ok', uptime: process.uptime() });
 });
 
